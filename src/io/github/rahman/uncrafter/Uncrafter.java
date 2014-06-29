@@ -3,7 +3,6 @@ package io.github.rahman.uncrafter;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,6 +12,8 @@ public class Uncrafter extends JavaPlugin {
 	
 	public void onEnable(){
 		getLogger().info(loggerPrefix + "- Version " + this.getDescription().getVersion() + " has been enabled.");
+		//Add config pull
+		//getConfig().getList("Resources").get(x);
 	}
 
 	public boolean onCommand(final CommandSender sender, Command command, String label, String[] args) {
@@ -32,10 +33,9 @@ public class Uncrafter extends JavaPlugin {
             		   return true;
             	   }
             	   
-            }
+            	}
                 return true;
             }
 		return false;
-            
 	}
 }

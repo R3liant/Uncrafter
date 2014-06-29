@@ -1,0 +1,7 @@
+#Add all recipes likely for Bux
+Recipes:
+  - Gold_pick:
+    - gold_ingot
+    - gold_ingot
+  - Iron_pick:
+    - iron_ingot
