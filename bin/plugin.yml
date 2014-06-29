@@ -1,0 +1,13 @@
+name: Uncrafter
+main: io.github.rahman.uncrafter.Uncrafter
+version: 0.1
+description: uncrafter plugin   
+commands:
+   unc:
+      description: uncrafter
+      usage: /<command>
+      permission: uncrafter.all
+      permission-message: You don't have <permission>
+permissions:
+   uncrafter.all:
+      description: all uncrafting
