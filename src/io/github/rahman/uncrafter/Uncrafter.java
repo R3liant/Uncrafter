@@ -1,7 +1,6 @@
 package io.github.rahman.uncrafter;
 
-import java.awt.List;
-
+import java.util.ArrayList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -40,21 +39,28 @@ public class Uncrafter extends JavaPlugin {
             	   if(dura == 0){
             		   
             		   Recipe recipe = getServer().getRecipesFor(((Player) sender).getItemInHand()).get(0);
+            		   
             		   if (recipe instanceof ShapelessRecipe){
-            			   List a = (List) ((ShapelessRecipe) recipe).getIngredientList();
-            			   sender.sendMessage("test " + a);
-            			   ((Player) sender).getInventory().setItemInHand(new ItemStack(Material.AIR)); 
-                		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Shapeless");
+            			   
+            			   ArrayList<ItemStack> list = (ArrayList<ItemStack>) ((ShapelessRecipe) recipe).getIngredientList();
+            			   ((Player) sender).getInventory().setItemInHand(new ItemStack(Material.AIR));
+            			   for( int x=0;x<list.size();x++){
+            				   ((Player) sender).getInventory().addItem(list.get(x));
+            			   }
+            			   
+                		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
             		   }
             		   
             		   else if(recipe instanceof ShapedRecipe){
             			   ((Player) sender).getInventory().setItemInHand(new ItemStack(Material.AIR)); 
-                		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Shaped");
+                		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
+
             		   }
             		   
             		   else{
             			   ((Player) sender).getInventory().setItemInHand(new ItemStack(Material.AIR)); 
-                		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "ERROR");
+                		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
+
             		   }
             		   return true;
             	   }
@@ -63,7 +69,9 @@ public class Uncrafter extends JavaPlugin {
             		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Item is damaged! You must repair it before you try to uncraft!");
             		   return true;
             	   }
-            	   
+            	   else{
+            		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "You cannot uncraft this item!");
+            	   }
             	}
                 return true;
             }
