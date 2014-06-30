@@ -31,41 +31,43 @@ public class Uncrafter extends JavaPlugin {
 	public boolean onCommand(final CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             if (command.getName().equalsIgnoreCase("unc") & (sender.hasPermission("uncrafter.all"))) {
-            	ItemStack item = ((Player) sender).getPlayer().getItemInHand();
-            	
+            	Player player = (Player) sender;
+            	ItemStack item = (player).getPlayer().getItemInHand();
             	   if(item==null){
             		   return false;
             	   }
             	   
-            	   int dura = ((Player) sender).getPlayer().getItemInHand().getDurability();
+            	   int dura = (player).getPlayer().getItemInHand().getDurability();
+            	   Recipe recipe = getServer().getRecipesFor((player).getItemInHand()).get(0);
+            	   if(recipe == null)
+                       return false;
             	   
             	   if(dura == 0){
-            		   
-            		   Recipe recipe = getServer().getRecipesFor(((Player) sender).getItemInHand()).get(0);
-            		   
             		   if (recipe instanceof ShapelessRecipe){
             			   
             			   ArrayList<ItemStack> slist = (ArrayList<ItemStack>) ((ShapelessRecipe) recipe).getIngredientList();
-            			   ((Player) sender).getInventory().setItemInHand(new ItemStack(Material.AIR));
+            			   (player).getInventory().setItemInHand(new ItemStack(Material.AIR));
             			   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
-            			   for( int i=0;i<slist.size();i++){
-            				   ((Player) sender).getInventory().addItem(slist.get(i));
+            			   for( int itemstack=0;itemstack<slist.size();itemstack++){
+            				   (player).getInventory().addItem(slist.get(itemstack));
             			   }
             			   
             		   }
             		   
             		   else if(recipe instanceof ShapedRecipe){
-            			   Map<Character, ItemStack> smap = ((ShapedRecipe) recipe).getIngredientMap();
-            			   ((Player) sender).getInventory().setItemInHand(new ItemStack(Material.AIR));
+            			   Map<Character, ItemStack> shapedmap = ((ShapedRecipe) recipe).getIngredientMap();
+            			   (player).getInventory().setItemInHand(new ItemStack(Material.AIR));
             			   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
-            	            for (ItemStack j : smap.values()){
-            	            	((Player) sender).getInventory().addItem(j);
+            	            for (ItemStack shapeditemstack : shapedmap.values()){
+            	            	if(shapeditemstack != null){
+            	            		(player).getInventory().addItem(shapeditemstack);
+            	            	}
             	            }
 
             		   }
             		   
             		   else{
-            			   ((Player) sender).getInventory().setItemInHand(new ItemStack(Material.AIR)); 
+            			   (player).getInventory().setItemInHand(new ItemStack(Material.AIR)); 
                 		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
 
             		   }
@@ -75,9 +77,6 @@ public class Uncrafter extends JavaPlugin {
             	   else if(dura != 0){
             		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Item is damaged! You must repair it before you try to uncraft!");
             		   return true;
-            	   }
-            	   else{
-            		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "You cannot uncraft this item!");
             	   }
             	}
                 return true;
