@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Uncrafter extends JavaPlugin {
@@ -25,11 +26,18 @@ public class Uncrafter extends JavaPlugin {
             		   return false;
             	   }
             	   
-            	   double dura = ((Player) sender).getPlayer().getItemInHand().getDurability();
-            	   
+            	   int dura = ((Player) sender).getPlayer().getItemInHand().getDurability();
+            	   Recipe recipe = getServer().getRecipesFor(((Player) sender).getItemInHand()).get(0);
+            	   /*getServer().ShapelessRecipe.getIngredientList();
+            	     This is where I am having issues*/
             	   
             	   if(dura == 0){
-            		   sender.sendMessage(ChatColor.WHITE + "Uncrafted");
+            		   sender.sendMessage(ChatColor.BLUE + "Uncrafted" + recipe);
+            		   return true;
+            	   }
+            	   
+            	   if(dura != 0){
+            		   sender.sendMessage(ChatColor.BLUE + "Item is damaged! You must repair it before you try to uncraft!" + recipe);
             		   return true;
             	   }
             	   
