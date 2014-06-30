@@ -1,5 +1,7 @@
 package io.github.rahman.uncrafter;
 
+import java.awt.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -39,6 +41,8 @@ public class Uncrafter extends JavaPlugin {
             		   
             		   Recipe recipe = getServer().getRecipesFor(((Player) sender).getItemInHand()).get(0);
             		   if (recipe instanceof ShapelessRecipe){
+            			   List a = (List) ((ShapelessRecipe) recipe).getIngredientList();
+            			   sender.sendMessage("test " + a);
             			   ((Player) sender).getInventory().setItemInHand(new ItemStack(Material.AIR)); 
                 		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Shapeless");
             		   }
