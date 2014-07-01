@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Uncrafter extends JavaPlugin {
 	public final String loggerPrefix = "[Uncrafter] ";
+    public final String chatPrefix = ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] ";
 	
 	public void onEnable(){
 		getLogger().info(loggerPrefix + "- Version " + this.getDescription().getVersion() + " has been enabled.");
@@ -44,14 +45,14 @@ public class Uncrafter extends JavaPlugin {
                     if (recipe instanceof ShapelessRecipe) {
                         ArrayList<ItemStack> slist = (ArrayList<ItemStack>) ((ShapelessRecipe) recipe).getIngredientList();
                         player.getInventory().setItemInHand(new ItemStack(Material.AIR));
-                        sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
+                        sender.sendMessage(chatPrefix + ChatColor.RED + "Your item has been uncrafted!");
                         for (ItemStack aStack : slist) {
                             player.getInventory().addItem(aStack);
                         }
                     } else if (recipe instanceof ShapedRecipe) {
                         Map<Character, ItemStack> shapedmap = ((ShapedRecipe) recipe).getIngredientMap();
                         player.getInventory().setItemInHand(new ItemStack(Material.AIR));
-                        sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
+                        sender.sendMessage(chatPrefix + ChatColor.RED + "Your item has been uncrafted!");
                         for (ItemStack shapeditemstack : shapedmap.values()) {
                             if (shapeditemstack != null) {
                                 player.getInventory().addItem(shapeditemstack);
@@ -59,11 +60,11 @@ public class Uncrafter extends JavaPlugin {
                         }
                     } else {
                         player.getInventory().setItemInHand(new ItemStack(Material.AIR));
-                        sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
+                        sender.sendMessage(chatPrefix + ChatColor.RED + "Your item has been uncrafted!");
                     }
                     return true;
                 } else {
-                    sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Item is damaged! You must repair it before you try to uncraft!");
+                    sender.sendMessage(chatPrefix + ChatColor.RED + "Item is damaged! You must repair it before you try to uncraft!");
                     return true;
                 }
             }
