@@ -29,58 +29,46 @@ public class Uncrafter extends JavaPlugin {
 	}
 
 	public boolean onCommand(final CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            if (command.getName().equalsIgnoreCase("unc") & (sender.hasPermission("uncrafter.all"))) {
+        if (command.getName().equalsIgnoreCase("unc") & (sender.hasPermission("uncrafter.all"))) {
+            if (sender instanceof Player) {
             	Player player = (Player) sender;
             	ItemStack item = player.getPlayer().getItemInHand();
-            	   if(item==null){
-            		   return false;
-            	   }
-            	   
-            	   int dura = player.getPlayer().getItemInHand().getDurability();
-            	   Recipe recipe = getServer().getRecipesFor(player.getItemInHand()).get(0);
-            	   if(recipe == null)
-                       return false;
-            	   
-            	   if(dura == 0){
-            		   if (recipe instanceof ShapelessRecipe){
-            			   
-            			   ArrayList<ItemStack> slist = (ArrayList<ItemStack>) ((ShapelessRecipe) recipe).getIngredientList();
-            			   player.getInventory().setItemInHand(new ItemStack(Material.AIR));
-            			   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
-            			   for( int itemstack=0;itemstack<slist.size();itemstack++){
-            				   player.getInventory().addItem(slist.get(itemstack));
-            			   }
-            			   
-            		   }
-            		   
-            		   else if(recipe instanceof ShapedRecipe){
-            			   Map<Character, ItemStack> shapedmap = ((ShapedRecipe) recipe).getIngredientMap();
-            			   player.getInventory().setItemInHand(new ItemStack(Material.AIR));
-            			   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
-            	            for (ItemStack shapeditemstack : shapedmap.values()){
-            	            	if(shapeditemstack != null){
-            	            		player.getInventory().addItem(shapeditemstack);
-            	            	}
-            	            }
-
-            		   }
-            		   
-            		   else{
-            			   player.getInventory().setItemInHand(new ItemStack(Material.AIR)); 
-                		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
-
-            		   }
-            		   return true;
-            	   }
-            	   
-            	   else if(dura != 0){
-            		   sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Item is damaged! You must repair it before you try to uncraft!");
-            		   return true;
-            	   }
+            	if(item==null){
+                    return false;
             	}
-                return true;
+            	Recipe recipe = getServer().getRecipesFor(player.getItemInHand()).get(0);
+            	if(recipe == null) {
+                    return false;
+                }
+            	if(player.getPlayer().getItemInHand().getDurability() == 0) {
+                    if (recipe instanceof ShapelessRecipe) {
+                        ArrayList<ItemStack> slist = (ArrayList<ItemStack>) ((ShapelessRecipe) recipe).getIngredientList();
+                        player.getInventory().setItemInHand(new ItemStack(Material.AIR));
+                        sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
+                        for (ItemStack aStack : slist) {
+                            player.getInventory().addItem(aStack);
+                        }
+                    } else if (recipe instanceof ShapedRecipe) {
+                        Map<Character, ItemStack> shapedmap = ((ShapedRecipe) recipe).getIngredientMap();
+                        player.getInventory().setItemInHand(new ItemStack(Material.AIR));
+                        sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
+                        for (ItemStack shapeditemstack : shapedmap.values()) {
+                            if (shapeditemstack != null) {
+                                player.getInventory().addItem(shapeditemstack);
+                            }
+                        }
+                    } else {
+                        player.getInventory().setItemInHand(new ItemStack(Material.AIR));
+                        sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Your item has been uncrafted!");
+                    }
+                    return true;
+                } else {
+                    sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.BLUE + "Uncrafter" + ChatColor.WHITE + "] " + ChatColor.RED + "Item is damaged! You must repair it before you try to uncraft!");
+                    return true;
+                }
             }
-		return false;
+            return true;
+        }
+        return true;
 	}
 }
