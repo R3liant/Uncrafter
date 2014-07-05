@@ -3,6 +3,7 @@ package io.github.rahman.uncrafter;
 import java.util.ArrayList;
 //import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -57,7 +58,11 @@ public class Uncrafter extends JavaPlugin {
                         if (item.getEnchantments().size() >= 1) {
                         	Map<Enchantment,Integer> stored = item.getEnchantments();
                         	ItemStack resultStack = new ItemStack(Material.ENCHANTED_BOOK);
-                        	//add enchants
+                        	EnchantmentStorageMeta em = (EnchantmentStorageMeta)resultStack.getItemMeta();
+                        	for(Entry<Enchantment,Integer> e : stored.entrySet()){
+                        		em.addStoredEnchant(e.getKey(), e.getValue(), true);
+                        	}
+                        	resultStack.setItemMeta(em);
                         	player.getInventory().addItem(resultStack);
                         
                         player.getInventory().setItemInHand(new ItemStack(Material.AIR));
@@ -71,7 +76,11 @@ public class Uncrafter extends JavaPlugin {
                         if (item.getEnchantments().size() >= 1) {
                         	Map<Enchantment,Integer> stored = item.getEnchantments();
                         	ItemStack resultStack = new ItemStack(Material.ENCHANTED_BOOK);
-                        	//add enchants
+                        	EnchantmentStorageMeta em = (EnchantmentStorageMeta)resultStack.getItemMeta();
+                        	for(Entry<Enchantment,Integer> e : stored.entrySet()){
+                        		em.addStoredEnchant(e.getKey(), e.getValue(), true);
+                        	}
+                        	resultStack.setItemMeta(em);
                         	player.getInventory().addItem(resultStack);
                         }
                         player.getInventory().setItemInHand(new ItemStack(Material.AIR));
@@ -97,4 +106,7 @@ public class Uncrafter extends JavaPlugin {
         }
         return true;
 	}
+        return false;
+}
+
 }

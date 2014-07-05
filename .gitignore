@@ -2,7 +2,7 @@
 .classpath
 .project
 .settings
-
+.metadata
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
