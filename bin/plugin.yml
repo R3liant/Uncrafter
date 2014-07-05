@@ -1,6 +1,6 @@
 name: Uncrafter
 main: io.github.rahman.uncrafter.Uncrafter
-version: 0.1
+version: 0.2
 description: uncrafter plugin   
 commands:
    unc:
