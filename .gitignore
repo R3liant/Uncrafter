@@ -3,6 +3,7 @@
 .project
 .settings
 .metadata
+.bin
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

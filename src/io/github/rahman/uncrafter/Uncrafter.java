@@ -63,8 +63,6 @@ public class Uncrafter extends JavaPlugin {
 				}
 
 				if (item.getDurability() == 0) {
-					sender.sendMessage(chatPrefix + ChatColor.RED
-							+ "Durabillity Correct!");
 					if (recipe instanceof ShapelessRecipe) {
 						ArrayList<ItemStack> slist = (ArrayList<ItemStack>) ((ShapelessRecipe) recipe)
 								.getIngredientList();
